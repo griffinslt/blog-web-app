@@ -26,5 +26,7 @@ class UserSeeder extends Seeder
         $u2->email = 'tomsblog@email.com';
         $u2->password = 'differentpassword';
         $u2->save();
+
+        User::factory()->count(50)->create();
     }
 }
