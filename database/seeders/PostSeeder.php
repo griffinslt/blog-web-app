@@ -20,5 +20,7 @@ class PostSeeder extends Seeder
         $p->body = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ante ipsum, tincidunt non orci sed, pulvinar convallis mi. Vivamus sed hendrerit sem. Vivamus fermentum est ut metus imperdiet auctor. Duis sit amet nulla at tortor dignissim scelerisque. Proin eu nunc convallis, ornare diam nec, gravida nibh. Proin ac augue purus. Cras consectetur vulputate varius. Mauris posuere tellus eu ullamcorper porta. Nullam ultrices auctor felis id suscipit.';
         $p->user_id = 1;
         $p->save();
+
+        Post::factory()->count(50)->create();
     }
 }
