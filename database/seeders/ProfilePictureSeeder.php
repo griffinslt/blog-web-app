@@ -20,5 +20,7 @@ class ProfilePictureSeeder extends Seeder
         $p->user_id = 1;
         $p->save();
 
+        ProfilePicture::factory()->count(50)->create();
+
     }
 }
