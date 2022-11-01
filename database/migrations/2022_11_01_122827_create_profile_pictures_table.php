@@ -15,7 +15,12 @@ return new class extends Migration
     {
         Schema::create('profile_pictures', function (Blueprint $table) {
             $table->id();
+            $table->string('file_path');
             $table->timestamps();
+
+            
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
