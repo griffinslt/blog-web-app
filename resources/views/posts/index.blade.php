@@ -21,6 +21,8 @@
         <hr/>
       @endforeach
     </div>
+
+    <a class="btn btn-primary" href="">Create Post</a>
    
   
 

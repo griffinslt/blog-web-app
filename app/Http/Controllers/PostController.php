@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -17,7 +18,7 @@ class PostController extends Controller
     {
         $posts = Post::all();
         $users = User::all();
-        return view('posts.index', ['posts' => $posts], ['users' => $users]);
+        return view('posts.index', ['posts' => $posts, 'users' => $users]);
     }
 
     /**
@@ -50,7 +51,8 @@ class PostController extends Controller
     public function show(Post $post)
     {
         $users = User::all();
-        return view('posts.post', ['post' => $post], ['users' => $users]);
+        $comments = Comment::all();
+        return view('posts.post', ['post' => $post, 'users' => $users, 'comments' => $comments ]);
     }
 
     /**

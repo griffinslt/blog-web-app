@@ -28,7 +28,7 @@ class CommentSeeder extends Seeder
         $c1->post_id = 1;
         $c1->save();
 
-        Comment::factory()->count(200)->create();
+        Comment::factory()->count(400)->create();
 
 
 
