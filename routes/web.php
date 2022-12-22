@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,8 +31,10 @@ Route::middleware('auth')->group(function () {
 
 
 
-Route::get('/posts', function () {
-    return view('posts');
-});
+Route::get('/posts', [PostController::class, 'index'])
+    ->name('posts.index');
+
+Route::get('/posts/{post}', [PostController::class, 'show'])
+    ->name('posts.post');
 
 require __DIR__.'/auth.php';

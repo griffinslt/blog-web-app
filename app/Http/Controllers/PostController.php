@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -13,7 +15,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = Post::all();
+        $users = User::all();
+        return view('posts.index', ['posts' => $posts], ['users' => $users]);
     }
 
     /**
@@ -43,9 +47,10 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Post $post)
     {
-        //
+        $users = User::all();
+        return view('posts.post', ['post' => $post], ['users' => $users]);
     }
 
     /**
