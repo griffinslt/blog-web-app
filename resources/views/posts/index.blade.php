@@ -8,7 +8,7 @@
     <div class="container-fluid">
       <h1> Blog Posts</h1>
       @foreach ($posts as $post)
-        <h3> {{ $post->title }} </h2>
+        <a href="{{ route('posts.post', ['post' => $post->id])}}"><h3> {{ $post->title }} </h3></a>
         <p> by 
 
         @foreach ($users as $user)
