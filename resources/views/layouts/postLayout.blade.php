@@ -13,7 +13,6 @@
 
     <title>Blogs - @yield('title')</title>
 <body>
-    <!-- any conent from the veiws I want to be yielded here -->
     <div class="container-fluid">
     @yield('content')
     </div>
