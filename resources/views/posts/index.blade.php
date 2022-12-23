@@ -22,7 +22,7 @@
       @endforeach
     </div>
 
-    <a class="btn btn-primary" href="">Create Post</a>
+    <a class="btn btn-primary" href="{{ route('posts.create') }}">Create Post</a>
    
   
 
