@@ -42,8 +42,14 @@
 <a class="btn btn-outline-primary" href="">Write Comment</a>
 <a href="/posts" class="btn btn-primary ">Go Back</a>
  
-
 @if(Auth::user()->id == $post->user_id)
-  delete post 
+    <form 
+    action=" {{ route('posts.destroy', ['post' => $post->id]) }}" 
+    method="post">
+    @csrf
+    @method('delete')
+    <button type="submit" class = "btn btn-danger"> Delete </button>
+</form>
 @endif
+
 @endsection 
