@@ -17,7 +17,7 @@ class ProfilePictureFactory extends Factory
     public function definition()
     {
         return [
-            'file_path' => fake()-> filePath(),
+            'file_path' => fake()-> imageUrl(300, 300),
             'user_id' => fake()->numberBetween(1,2),
         ];
     }

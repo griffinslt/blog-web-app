@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,4 +38,9 @@ Route::get('/posts', [PostController::class, 'index'])
 Route::get('/posts/{post}', [PostController::class, 'show'])
     ->name('posts.post');
 
+Route::get('/users', [UserController::class, 'index'])
+    ->name('users.index');
+
+Route::get('/users/{user}', [UserController::class, 'show'])
+    ->name('users.user');
 require __DIR__.'/auth.php';
