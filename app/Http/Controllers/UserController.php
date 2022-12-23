@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\ProfilePicture;
 use App\Models\User;
@@ -51,7 +52,8 @@ class UserController extends Controller
     {
         $posts = Post::all();
         $profilePictures = ProfilePicture::all();
-        return view('users.user', ['user' => $user, 'posts' => $posts, 'profilePictures' => $profilePictures]);
+        $comments = Comment::all();
+        return view('users.user', ['user' => $user, 'posts' => $posts, 'profilePictures' => $profilePictures, 'comments' => $comments]);
     }
 
     /**

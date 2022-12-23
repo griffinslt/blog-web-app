@@ -24,4 +24,22 @@
     @endif
 @endforeach
 </ul>
+
+
+<h3>Comments</h3>
+<ul>
+@foreach ($comments as $comment)
+    @if ($comment->user_id == $user->id)
+        @foreach ($posts as $post)
+            @if ($post->id == $comment->post_id)
+                <li><a href="{{route('posts.post', ['post' => $post->id])}}"> {{ $post->title }}</a></li>
+                <p></p>
+                {{ $comment->body }}
+                <hr/>
+            @endif
+        @endforeach
+        
+    @endif
+@endforeach
+</ul>
 @endsection
