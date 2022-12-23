@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
@@ -34,7 +36,21 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request);
+        $validatedData = $request->validate([
+            'body' => 'required',
+            'post_id' => 'required',
+        ]);
+
+
+        $c = new Comment();
+        $c->body = $validatedData['body'];
+        $c->user_id = Auth::user()->id;
+        $c->post_id = $validatedData['post_id'];
+        $c->save();
+
+        session()->flash('message', 'Comment Created');
+        return redirect()->back();
     }
 
     /**

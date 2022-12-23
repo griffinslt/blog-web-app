@@ -35,12 +35,15 @@
     @endif
 @endforeach
 </div>
-<div class="form-outline">
-    <textarea class="form-control" id="textAreaExample" rows="4"></textarea>
-    <label class="form-label" for="textAreaExample"></label>
-  </div>
-<a class="btn btn-outline-primary" href="">Write Comment</a>
-<a href="/posts" class="btn btn-primary ">Go Back</a>
+<form method="POST" action="{{ route('comments.store') }}" >
+    @csrf
+    <textarea type = "text" class="form-control" name= "body" rows="4"></textarea>
+    <input name="post_id" type="hidden" value={{$post->id}}>
+    <input class="btn btn-outline-primary" type ="submit" value ="Write Comment">
+
+
+    <a href="/posts" class="btn btn-primary ">Go Back</a>
+</form>
  
 @if(Auth::user()->id == $post->user_id)
     <form 

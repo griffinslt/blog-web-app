@@ -31,6 +31,7 @@ Route::middleware('auth')->group(function () {
 });
 
 
+
 Route::get('/posts/create', [PostController::class, 'create'])
     ->name('posts.create');
 
@@ -51,4 +52,7 @@ Route::get('/users', [UserController::class, 'index'])
 
 Route::get('/users/{user}', [UserController::class, 'show'])
     ->name('users.user');
+
+Route::post('/posts', [PostController::class, 'commentStore'])
+    ->name('comments.store');
 require __DIR__.'/auth.php';

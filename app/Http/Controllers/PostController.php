@@ -106,4 +106,23 @@ class PostController extends Controller
 
         return redirect()->route('posts.index')->with('message', 'post was Deleted.');
     }
+
+
+    public function commentStore(Request $request)
+    {
+        $validatedData = $request->validate([
+            'body' => 'required',
+            'post_id' => 'required',
+        ]);
+
+
+        $c = new Comment();
+        $c->body = $validatedData['body'];
+        $c->user_id = Auth::user()->id;
+        $c->post_id = $validatedData['post_id'];
+        $c->save();
+
+        session()->flash('message', 'Comment Created');
+        return redirect()->back();
+    }
 }
