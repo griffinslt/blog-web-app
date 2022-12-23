@@ -13,7 +13,7 @@
 
         @foreach ($users as $user)
           @if ($post->user_id == $user->id)
-              {{$user->name}}
+              <a href="{{ route('users.user', ['user' => $user]) }}">{{$user->name}}</a>
           @endif
         @endforeach
 

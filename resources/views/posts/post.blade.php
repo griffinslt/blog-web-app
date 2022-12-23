@@ -7,7 +7,7 @@
 <p> <strong> by 
     @foreach ($users as $user)
           @if ($post->user_id == $user->id)
-              {{$user->name}}
+              <a href="{{ route('users.user', ['user' => $user]) }}">{{ $user->name }}</a>
           @endif
         @endforeach
     </strong>
@@ -25,7 +25,7 @@
     @if ($comment->post_id == $post->id)
         @foreach ($users as $user)
             @if ($comment->user_id == $user->id)
-                {{ $user->name }}
+                <a href="{{ route('users.user', ['user' => $user]) }}">{{ $user->name }}</a>
                 <p></p>
             @endif
         @endforeach
