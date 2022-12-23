@@ -43,6 +43,7 @@
 <a href="/posts" class="btn btn-primary ">Go Back</a>
  
 
-
-
+@if(Auth::user()->id == $post->user_id)
+  delete post 
+@endif
 @endsection 

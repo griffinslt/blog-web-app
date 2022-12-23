@@ -1,8 +1,16 @@
 @extends('layouts.myLayout')
 
 @section('title', 'User Account')
+@foreach ($profilePictures as $profilePicture)
+            @if ($profilePicture->user_id == $user->id)
+            <link rel="icon" type="image/png" href="{{ $profilePicture->file_path }}" sizes="16x16">
+            @endif
+        @endforeach
+
 
 @section('content')
+
+
 
 <h1>Account Details</h1>
 @foreach ($profilePictures as $profilePicture)

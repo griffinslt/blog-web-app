@@ -6,6 +6,7 @@ use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -28,7 +29,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('posts.create');
     }
 
     /**
@@ -39,7 +40,22 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        $validatedData = $request->validate([
+            'title' => 'required|max:255',
+            'body' => 'required',
+        ]);
+
+
+        $p = new Post;
+        $p->title = $validatedData['title'];
+        $p->body = $validatedData['body'];
+        $p->user_id = Auth::user()->id;
+        $p->save();
+
+        session()->flash('message', 'Post Created');
+        return redirect()->route('posts.index');
+
     }
 
     /**
