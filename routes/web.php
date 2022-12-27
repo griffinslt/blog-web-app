@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -31,6 +32,13 @@ Route::middleware('auth')->group(function () {
 });
 
 
+Route::post('/posts', [CommentController::class, 'store'])
+    ->name('comments.store');
+
+
+Route::delete('/posts/{post}', [CommentController::class, 'destroy'])
+    ->name('comments.destroy');
+
 
 Route::get('/posts/create', [PostController::class, 'create'])
     ->name('posts.create');
@@ -53,6 +61,6 @@ Route::get('/users', [UserController::class, 'index'])
 Route::get('/users/{user}', [UserController::class, 'show'])
     ->name('users.user');
 
-Route::post('/posts', [PostController::class, 'commentStore'])
-    ->name('comments.store');
+
+
 require __DIR__.'/auth.php';

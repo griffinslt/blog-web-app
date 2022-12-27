@@ -36,7 +36,6 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
         $validatedData = $request->validate([
             'body' => 'required',
             'post_id' => 'required',
@@ -95,6 +94,8 @@ class CommentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $comment = Comment::findOrFail($id);
+        $comment->delete();
+        return redirect()->back();
     }
 }

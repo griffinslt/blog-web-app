@@ -30,12 +30,23 @@
             @endif
         @endforeach
         {{ $comment->body }}
+        @if (Auth::user()->id == $comment->user_id)
+            <form 
+                action=" {{ route('comments.destroy', ['id' => $comment->id]) }}" 
+                method="post">
+                @csrf
+                @method('delete')
+                <button type="submit" class = "btn btn-danger"> Delete </button>
+            </form> 
+        @endif
         <hr/>
         
     @endif
 @endforeach
 </div>
-<form method="POST" action="{{ route('comments.store') }}" >
+
+{{-- [method="POST" action="{{ route('comments.store') }}"] --}}
+<form  >
     @csrf
     <textarea type = "text" class="form-control" name= "body" rows="4"></textarea>
     <input name="post_id" type="hidden" value={{$post->id}}>
@@ -47,12 +58,12 @@
  
 @if(Auth::user()->id == $post->user_id)
     <form 
-    action=" {{ route('posts.destroy', ['post' => $post->id]) }}" 
-    method="post">
-    @csrf
-    @method('delete')
-    <button type="submit" class = "btn btn-danger"> Delete </button>
-</form>
+        action=" {{ route('posts.destroy', ['post' => $post->id]) }}" 
+        method="post">
+        @csrf
+        @method('delete')
+        <button type="submit" class = "btn btn-danger"> Delete </button>
+    </form>
 @endif
 
 @endsection 

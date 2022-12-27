@@ -125,4 +125,11 @@ class PostController extends Controller
         session()->flash('message', 'Comment Created');
         return redirect()->back();
     }
+
+    public function commentDestroy($id)
+    {
+        $comment = Comment::findOrFail($id);
+        $comment->delete();
+        return redirect()->back();
+    }
 }
