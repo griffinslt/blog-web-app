@@ -10,9 +10,11 @@
       integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
       crossorigin="anonymous"
     />
+    @livewireStyles
 
     <title>Blogs - @yield('title')</title>
 <body>
+    @livewireScripts
     <div class="container-fluid">
     @yield('content')
     </div>
