@@ -1,6 +1,6 @@
 <div>
     <h3> Comments </h2>
-        <div class= "p-3 border bg-light">
+        <div class= "container-fluid p-3 border bg-light overflow-auto" style="height: 450px;">
 
             @foreach ($oldComments as $oldComment)
             

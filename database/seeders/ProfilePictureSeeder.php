@@ -16,7 +16,7 @@ class ProfilePictureSeeder extends Seeder
     public function run()
     {
         $p = new ProfilePicture;
-        $p->file_path = 'https://via.placeholder.com/300.png/09f/fff';
+        $p->file_path = url("images/blank-profile-picture.png");
         $p->user_id = 1;
         $p->save();
 
