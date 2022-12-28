@@ -13,11 +13,23 @@
 
 
 <h1>Account Details</h1>
+@php
+    $found = false;
+@endphp
 @foreach ($profilePictures as $profilePicture)
             @if ($profilePicture->user_id == $user->id)
-            <img src="{{ $profilePicture->file_path }}" class="img-thumbnail" alt="...">
+                <img src="{{ $profilePicture->file_path }}" class="img-thumbnail">
+                @php
+                    $found = true;
+                @endphp
             @endif
-        @endforeach
+@endforeach
+
+@if ($found == false)
+    <p>new profile pic?</p>
+@endif
+
+
 <ul>   
     <li>Name: {{$user->name}}</li>
     <li>Email: {{$user->email}}</li>
