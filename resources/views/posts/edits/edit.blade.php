@@ -8,7 +8,7 @@
 @if (auth()->user()->id == $post->user_id)
     
 
-<h1>Update Post</h1>
+<h1>Edit Post</h1>
     {{Auth::user()->email}}
     <form method="POST" action="{{ route('posts.update') }}">
         @csrf
@@ -18,7 +18,7 @@
         <input name="post_id" type="hidden" value={{$post->id}}>
         <input type="submit" value="Submit" class="btn btn-primary">
         
-        <a class="btn btn-danger" href="{{ route('posts.index') }}">Cancel</a>
+        <a class="btn btn-danger" href="{{ url()->previous() }}">Cancel</a>
     </form>
 
     

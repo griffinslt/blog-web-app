@@ -5,7 +5,7 @@
 
 @section('content')
     <h1>Create a Post</h1>
-    {{Auth::user()->email}}
+
     <form method="POST" action="{{ route('posts.store') }}">
         @csrf
         <p>Title: <input type="text" name="title" ></p>

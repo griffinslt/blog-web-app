@@ -5,6 +5,8 @@ namespace App\Http\Livewire;
 use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
+use Illuminate\Mail\Message;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
 class Commenter extends Component
@@ -25,6 +27,7 @@ class Commenter extends Component
 
     public $newComment;
 
+    public $userEmail;
 
 
     public function addComment()
@@ -33,12 +36,12 @@ class Commenter extends Component
         if ($this->newComment) {
 
 
-            array_unshift($this->comments, [
+            $this->comments[] = [
                 'body' => $this->newComment,
                 'post_id' => $this->post->id,
                 'user_id' => auth()->user()->id,
 
-            ]);
+            ];
 
             $c = [
                 'body' => $this->newComment,
@@ -51,6 +54,18 @@ class Commenter extends Component
             Comment::create($c);
 
 
+            foreach ($this->users as $postUser) {
+                if ($postUser->id == $this->post['user_id']) {
+                    $this->userEmail = $postUser->email;
+                    break;
+                }
+            }
+            if (auth()->user()->email != $this->userEmail) {
+                Mail::raw(auth()->user()->name." said the following on your post ".$this->post->title.": \n".$this->newComment, function (Message $message) {
+                    $message->to($this->userEmail);
+                });
+            }
+            
             $this->newComment = "";
         }
 
