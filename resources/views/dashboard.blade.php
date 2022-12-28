@@ -11,6 +11,12 @@
                 <div class="p-6 text-gray-900">
                     {{ __("You're logged in!") }}
                 </div>
+                <div class="p-6 text-gray-900">
+                    <a href="{{route('posts.index')}}">To Posts</a>
+                </div>
+                <div class="p-6 text-gray-900">
+                    <a href="{{route('users.index')}}">To Users</a>
+                </div>
             </div>
         </div>
     </div>
