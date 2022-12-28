@@ -7,8 +7,10 @@
 @section('content')
     
 
-    <div class="container-fluid">
+
       <h1> Blog Posts</h1>
+      
+      @if ($posts->count() > 0)
       @foreach ($posts as $post)
         <a href="{{ route('posts.post', ['post' => $post->id])}}"><h3> {{ $post->title }} </h3></a>
         <p> by 
@@ -22,9 +24,14 @@
         </p>
         <hr/>
       @endforeach
-    </div>
+      {{ $posts->links() }}
+      @else
+          <p>No posts yet</p>
+      @endif
+      
 
-    {{ $posts->links() }}
+
+    
 
     <a class="btn btn-primary" href="{{ route('posts.create') }}">Create Post</a>
    

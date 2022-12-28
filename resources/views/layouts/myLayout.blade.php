@@ -19,7 +19,7 @@
     @livewireScripts
     <div class="container-fluid">
 
-      <div class="btn-group p-6" role="group">
+      <div class="btn-group" role="group">
         <a class="btn btn-outline-primary" href="{{ route('posts.index')}}">Posts</a>
         <a class="btn btn-primary" href=" {{ route('loginOrRegister') }}">Home</a>
         <a class="btn btn-outline-primary" href="{{ route('users.index') }}">Users</a>
