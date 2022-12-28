@@ -39,6 +39,12 @@ Route::post('/posts', [CommentController::class, 'store'])
 Route::delete('/posts/{post}', [CommentController::class, 'destroy'])
     ->name('comments.destroy');
 
+Route::post('/posts/update', [PostController::class, 'update'])
+    ->name('posts.update');
+
+
+Route::get('/posts/edits/{post}', [PostController::class, 'edit'])
+    ->name('posts.edits.edit');
 
 Route::get('/posts/create', [PostController::class, 'create'])
     ->name('posts.create');
