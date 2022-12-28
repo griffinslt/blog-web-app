@@ -16,7 +16,8 @@
                 
                 {{$oldComment['body']}}
                 @if ($oldComment['user_id'] == auth()->user()->id)
-                    <button wire:click="delete" class = "btn btn-danger"> Delete </button>
+                    {{-- <p></p> --}}
+                    {{-- <button wire:click="delete" class = "btn btn-danger"> Delete </button> --}}
                 @endif
                 <hr/>
             @endforeach
@@ -34,8 +35,9 @@
 
 
                 {{$comment['body']}}
-                @if ($oldComment['user_id'] == auth()->user()->id)
-                    <button wire:click="delete" class = "btn btn-danger"> Delete </button>
+                @if ($comment['user_id'] == auth()->user()->id)
+                    {{-- <p></p> --}}
+                    {{--<button wire:click="delete" class = "btn btn-danger"> Delete </button> --}}
                 @endif
                 <hr/>
             @endforeach

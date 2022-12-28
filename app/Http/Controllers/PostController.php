@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
@@ -17,7 +18,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::paginate(15) ;
         $users = User::all();
         return view('posts.index', ['posts' => $posts, 'users' => $users]);
     }
@@ -53,8 +54,11 @@ class PostController extends Controller
         $p->user_id = Auth::user()->id;
         $p->save();
 
+        $pid = Post::latest()->first()->id;
+
+
         session()->flash('message', 'Post Created');
-        return redirect()->route('posts.index');
+        return redirect()->route('posts.post', ['post' => $pid]);
 
     }
 

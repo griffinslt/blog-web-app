@@ -1,6 +1,8 @@
 @extends('layouts.myLayout')
 
 @section('title', 'Blog Posts')
+
+<link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css" />
     
 @section('content')
     
@@ -21,6 +23,8 @@
         <hr/>
       @endforeach
     </div>
+
+    {{ $posts->links() }}
 
     <a class="btn btn-primary" href="{{ route('posts.create') }}">Create Post</a>
    

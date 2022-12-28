@@ -15,7 +15,11 @@
 </p>
 <p></p>
 <p></p>
-<p> {{ $post->body }}</p>
+<p> {{ $post->body }} </p>
+@if ($post->user_id == auth()->user()->id)
+    <a class = "btn btn-success" href=" ">Update</a>
+@endif
+
 
 <hr/>
 

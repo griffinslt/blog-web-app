@@ -15,6 +15,8 @@ class Commenter extends Component
 
     public $oldComments;
 
+    public $dbComments;
+
     
 
     public $comments = [];
@@ -64,8 +66,35 @@ class Commenter extends Component
 
     public function delete()
     {
-        # code...
+
+        $this->getDBComments();
+        // foreach ($this->dbComments as $comment) {
+        //     if ($comment->) {
+        //         # code...
+        //     }
+        // }
+
+
+
+
+       
     }
+
+    public function refresh()
+    {
+        return redirect(request()->header('Referer'));
+    }
+
+    public function getDBComments()
+    {
+        $this->dbComments = Comment::where('post_id', '=', $this->post->id)->where('user_id', '=', auth()->user()->id)->get();
+    
+    
+    }
+
+
+
+
     public function render()
     {
         return view('livewire.commenter');
