@@ -11,12 +11,20 @@
       crossorigin="anonymous"
     />
     @livewireStyles
-
+</head>
     <title>Blogs - @yield('title')</title>
 <body>
   @if (Auth::check()) 
+  
     @livewireScripts
     <div class="container-fluid">
+
+      <div class="btn-group p-6" role="group">
+        <a class="btn btn-outline-primary" href="{{ route('posts.index')}}">Posts</a>
+        <a class="btn btn-primary" href=" {{ route('loginOrRegister') }}">Home</a>
+        <a class="btn btn-outline-primary" href="{{ route('users.index') }}">Users</a>
+      </div>
+
     @yield('content')
     </div>
 
