@@ -14,11 +14,26 @@
 
     <title>Blogs - @yield('title')</title>
 <body>
+  @if (Auth::check()) 
     @livewireScripts
     <div class="container-fluid">
     @yield('content')
     </div>
 
+    @else 
+    <div class="alert alert-warning" role="alert">
+      You are not logged in.
+    </div>
+    <div class="card">
+        
+      <div class="card-body bg-light">
+        <h5 class="card-title">Return home to create an account or login</h5>
+        <a href="{{ route('loginOrRegister') }}" class="btn btn-outline-primary">Home</a>
+      </div>
+    </div>
+
+
+  @endif
 
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"

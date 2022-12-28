@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('loginOrRegister');
-});
+})->name('loginOrRegister');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

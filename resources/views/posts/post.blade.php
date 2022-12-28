@@ -17,8 +17,19 @@
 <p></p>
 <p> {{ $post->body }} </p>
 @if ($post->user_id == auth()->user()->id)
-    <a class = "btn btn-success" href=" {{ route('posts.edits.edit', ['post' => $post]) }} ">Update</a>
+    
+    <form 
+        action=" {{ route('posts.destroy', ['post' => $post->id]) }}" 
+        method="post">
+        <a class = "btn btn-success" href=" {{ route('posts.edits.edit', ['post' => $post]) }} ">Edit</a>
+        @csrf
+        @method('delete')
+        <button type="submit" class = "btn btn-danger"> Delete </button>
+    </form>
 @endif
+
+    
+
 
 
 <hr/>
@@ -66,16 +77,8 @@
 
 
 
-{{-- 
-@if(Auth::user()->id == $post->user_id)
-    <form 
-        action=" {{ route('posts.destroy', ['post' => $post->id]) }}" 
-        method="post">
-        @csrf
-        @method('delete')
-        <button type="submit" class = "btn btn-danger"> Delete </button>
-    </form>
-@endif
---}}
+
+
+
 
 @endsection 
