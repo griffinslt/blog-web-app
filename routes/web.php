@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\CommentController;
-use App\Http\Controllers\ImageController;
+use App\Http\Controllers\ProfilePictureController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -34,13 +34,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Route::controller(ImageController::class)->group(function () {
-//     Route::get('/image-upload/{user}', 'index')->name('image.form');
-//     Route::post('/upload-image/{user}', 'store')->name('image.store');
-// });
 
-Route::get('/image-form/{user}', [ImageController::class, 'index'])->name('image.index');
-Route::post('/upload-image/{user}', [ImageController::class, 'store'])->name('image.store');
+Route::get('/image-form/{user}', [ProfilePictureController::class, 'index'])->name('image.index');
+Route::post('/upload-image/{user}', [ProfilePictureController::class, 'store'])->name('image.store');
 
 Route::post('/posts', [CommentController::class, 'store'])->name('comments.store');
 

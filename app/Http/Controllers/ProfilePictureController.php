@@ -8,7 +8,7 @@ use App\Models\ProfilePicture;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class ImageController extends Controller
+class ProfilePictureController extends Controller
 {
     /**
      * Display a listing of the resource.
