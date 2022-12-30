@@ -17,6 +17,9 @@
                 <div class="p-6">
                     <a class="btn btn-primary" href="{{route('users.index')}}">To Users</a>
                 </div>
+                <div class="p-6">
+                    <a class="btn btn-primary" href="{{route('users.user', ['user' => auth()->user()->id])}}">Your Blog Info</a>
+                </div>
             </div>
         </div>
     </div>
