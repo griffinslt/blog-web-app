@@ -7,7 +7,7 @@
         <h1>Image Upload</h1>
         
 
-        <form method="POST" action="{{ route('image.store',['user' => $user->id]) }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('profilePicture.store',['user' => $user->id]) }}" enctype="multipart/form-data">
             @csrf
             <input type="file" class="form-control" name="image" />
             <button type="submit" class="btn btn-primary">Upload</button>

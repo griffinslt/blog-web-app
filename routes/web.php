@@ -35,8 +35,8 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::get('/image-form/{user}', [ProfilePictureController::class, 'index'])->name('image.index');
-Route::post('/upload-image/{user}', [ProfilePictureController::class, 'store'])->name('image.store');
+Route::get('/profile-picture-input/{user}', [ProfilePictureController::class, 'index'])->name('profilePicture.index');
+Route::post('/upload-profile-picture/{user}', [ProfilePictureController::class, 'store'])->name('profilePicture.store');
 
 Route::post('/posts', [CommentController::class, 'store'])->name('comments.store');
 

@@ -8,12 +8,11 @@
 
     <form method="POST" action="{{ route('posts.store') }}">
         @csrf
-        <p>Title: <input type="text" name="title" ></p>
+        <p>Title: <input type="text" name="title"></p>
         <p>Body:</p>
-        <textarea type="text" class="form-control" name="body" rows = "25" ></textarea>
-    
+        <textarea type="text" class="form-control" name="body" rows="25"></textarea>
         <input type="submit" value="Submit" class="btn btn-primary">
-        
+        <a class="btn btn-info "href="">Upload an Image</a>
         <a class="btn btn-danger" href="{{ route('posts.index') }}">Cancel</a>
     </form>
 @endsection

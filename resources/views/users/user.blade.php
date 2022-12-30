@@ -24,7 +24,7 @@
             @endphp
             @if (auth()->user()->id == $profilePicture->user_id)
                 <p></p>
-                <a class="btn btn-success" href="{{ route('image.index', ['user' => $user->id]) }}">Change image</a>
+                <a class="btn btn-success" href="{{ route('profilePicture.index', ['user' => $user->id]) }}">Change Profile Picture</a>
                 <p></p>
                 @php
                     break;

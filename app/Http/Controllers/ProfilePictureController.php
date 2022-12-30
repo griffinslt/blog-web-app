@@ -17,7 +17,7 @@ class ProfilePictureController extends Controller
      */
     public function index(User $user)
     {
-        return view('image-form', ['user'=>$user]);
+        return view('profile-picture-input', ['user'=>$user]);
     }
 
     /**
