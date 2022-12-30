@@ -20,8 +20,6 @@ class Commenter extends Component
 
     protected $listeners = ['refreshComponent' => '$refresh'];
 
-    //public $commentsAsArray = $this->comments->get()->toArray();
-
     public $newComment;
 
     public $userEmail;
@@ -29,6 +27,8 @@ class Commenter extends Component
     public $update = false;
 
     public $cid;
+
+    public $oldComment;
 
     public function addComment()
     {
@@ -38,7 +38,8 @@ class Commenter extends Component
                 $comment->body = $this->newComment;
                 $comment->save();
                 $this->update = false;
-                $this->refresh();
+                $this->emailUpdate();
+
             } else {
                 $c = [
                     'body' => $this->newComment,
@@ -47,21 +48,51 @@ class Commenter extends Component
                 ];
 
                 Comment::create($c);
-                $this->refresh();
 
-                foreach ($this->users as $postUser) {
-                    if ($postUser->id == $this->post['user_id']) {
-                        $this->userEmail = $postUser->email;
-                        break;
-                    }
-                }
-                if (auth()->user()->email != $this->userEmail) {
-                    Mail::raw(auth()->user()->name . ' said the following on your post ' . $this->post->title . ": \n" . $this->newComment, function (Message $message) {
-                        $message->to($this->userEmail);
-                    });
-                }
+                $this->emailNew();
+
+                
             }
+            $this->refresh();
             $this->newComment = '';
+        }
+    }
+
+
+    private function emailNew()
+    {
+        foreach ($this->users as $postUser) {
+            if ($postUser->id == $this->post['user_id']) {
+                $this->userEmail = $postUser->email;
+                break;
+            }
+        }
+        if (auth()->user()->email != $this->userEmail) {
+            Mail::raw(auth()->user()->name . " said the following on your post '" . $this->post->title . "': \n'" . $this->newComment."'", function (Message $message) {
+                $message->to($this->userEmail);
+            });
+        }
+    }
+
+
+    private function emailUpdate()
+    {
+
+        $this->userEmail = User::where('id', '=', $this->post['user_id'])->first()->email;
+        if (auth()->user()->email != $this->userEmail) {
+            Mail::raw(auth()->user()->name . " updated their comment from  '".$this->oldComment."' to '".$this->newComment."' on your post '". $this->post->title."'" , function (Message $message) {
+                $message->to($this->userEmail);
+            });
+        }
+    }
+
+    private function emailDelete()
+    {
+        $this->userEmail = User::where('id', '=', $this->post['user_id'])->first()->email;
+        if (auth()->user()->email != $this->userEmail) {
+            Mail::raw(auth()->user()->name . " deleted their comment '".$this->oldComment."' on your post '". $this->post->title."'" , function (Message $message) {
+                $message->to($this->userEmail);
+            });
         }
     }
 
@@ -72,7 +103,9 @@ class Commenter extends Component
     public function delete($cid)
     {
         $comment = Comment::findOrFail($cid);
+        $this->oldComment = $comment->body;
         $comment->delete();
+        $this->emailDelete();
         $this->refresh();
     }
 
@@ -80,7 +113,8 @@ class Commenter extends Component
     {
         $this->cid = $cid;
         $comment = Comment::findOrFail($cid);
-        $this->newComment = $comment->body;
+        $this->oldComment =$comment->body;
+        $this->newComment = $this->oldComment;
         $this->update = true;
     }
 
@@ -90,13 +124,6 @@ class Commenter extends Component
             ->get()
             ->toArray();
         $this->emitSelf('refreshComponent');
-    }
-
-    public function getDBComments()
-    {
-        $this->dbComments = Comment::where('post_id', '=', $this->post->id)
-            ->where('user_id', '=', auth()->user()->id)
-            ->get();
     }
 
     public function render()

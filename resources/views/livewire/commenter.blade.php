@@ -24,7 +24,6 @@
 
         <form wire:submit.prevent="save">
             <textarea type="text" class="form-control" name="body" rows="4" wire:model="newComment"></textarea>
-
             <button class="btn btn-outline-primary" wire:click="addComment">Write Comment</button>
             <a href="/posts" class="btn btn-primary ">Go Back</a>
         </form>
