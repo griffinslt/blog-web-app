@@ -26,7 +26,12 @@
     
     @endif
 
-
+    @php
+        $pics = App\Models\PostPicture::where('post_id', '=', $post->id)->get()
+    @endphp
+    @foreach ($pics as $pic)
+        <img src="{{ $pic->file_path }}" >
+    @endforeach
 
 
 

@@ -29,7 +29,5 @@ class PostSeeder extends Seeder
         $p->save();
 
     
-
-    
     }
 }

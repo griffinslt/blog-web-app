@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ProfilePicture>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PostPicture>
  */
-class ProfilePictureFactory extends Factory
+class PostPictureFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,8 +17,7 @@ class ProfilePictureFactory extends Factory
     public function definition()
     {
         return [
-            'file_path' => fake()-> imageUrl(300, 300),
-            //'user_id' => fake()->numberBetween(1,2),
+            'file_path' => fake()-> imageUrl(200,300),
         ];
     }
 }

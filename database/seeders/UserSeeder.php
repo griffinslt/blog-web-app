@@ -28,10 +28,21 @@ class UserSeeder extends Seeder
         $u2->password = 'differentpassword';
         $u2->save();
 
+        $post = Post::factory();
         $user = User::factory()
-            ->hasPosts(3, function (array $attributes , User $user){
-                return ['user_id' => $user->id];
-            })
+            // ->hasPosts(3, function (array $attributes , User $user){
+            //     return ['user_id' => $user->id];
+            // })
+            ->has(
+                $post
+                ->count(3)
+                ->state(function(array $attributes , User $user){
+                    return ['user_id' => $user->id];
+                })
+                ->hasPostPictures(2, function(array $attributes , Post $post){
+                    return['post_id' => $post->id];
+                })
+            )
 
             ->hasProfilePicture(1, function(array $attributes , User $user){
                 return ['user_id' => $user->id];
