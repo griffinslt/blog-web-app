@@ -18,13 +18,13 @@
     @endphp
     @foreach ($profilePictures as $profilePicture)
         @if ($profilePicture->user_id == $user->id)
-            <img src="{{ $profilePicture->file_path }}" class="img-thumbnail">
+            <img src="{{ $profilePicture->file_path }}" class="img-thumbnail" width="300" height="300">
             @php
                 $found = true;
             @endphp
             @if (auth()->user()->id == $profilePicture->user_id)
                 <p></p>
-                <a class="btn btn-success" href="">Change image</a>
+                <a class="btn btn-success" href="{{ route('image.index', ['user' => $user->id]) }}">Change image</a>
                 <p></p>
                 @php
                     break;

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -23,7 +24,9 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -31,42 +34,35 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// Route::controller(ImageController::class)->group(function () {
+//     Route::get('/image-upload/{user}', 'index')->name('image.form');
+//     Route::post('/upload-image/{user}', 'store')->name('image.store');
+// });
 
-Route::post('/posts', [CommentController::class, 'store'])
-    ->name('comments.store');
+Route::get('/image-form/{user}', [ImageController::class, 'index'])->name('image.index');
+Route::post('/upload-image/{user}', [ImageController::class, 'store'])->name('image.store');
 
+Route::post('/posts', [CommentController::class, 'store'])->name('comments.store');
 
-Route::delete('/posts/{post}', [CommentController::class, 'destroy'])
-    ->name('comments.destroy');
+Route::delete('/posts/{post}', [CommentController::class, 'destroy'])->name('comments.destroy');
 
-Route::post('/posts/update', [PostController::class, 'update'])
-    ->name('posts.update');
+Route::post('/posts/update', [PostController::class, 'update'])->name('posts.update');
 
+Route::get('/posts/edits/{post}', [PostController::class, 'edit'])->name('posts.edits.edit');
 
-Route::get('/posts/edits/{post}', [PostController::class, 'edit'])
-    ->name('posts.edits.edit');
+Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
 
-Route::get('/posts/create', [PostController::class, 'create'])
-    ->name('posts.create');
+Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
 
-Route::post('/posts', [PostController::class, 'store'])
-    ->name('posts.store');
+Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 
-Route::get('/posts', [PostController::class, 'index'])
-    ->name('posts.index');
+Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.post');
 
-Route::get('/posts/{post}', [PostController::class, 'show'])
-    ->name('posts.post');
+Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
 
-Route::delete('/posts/{post}', [PostController::class, 'destroy'])
-    ->name('posts.destroy');
+Route::get('/users', [UserController::class, 'index'])->name('users.index');
 
-Route::get('/users', [UserController::class, 'index'])
-    ->name('users.index');
-
-Route::get('/users/{user}', [UserController::class, 'show'])
-    ->name('users.user');
+Route::get('/users/{user}', [UserController::class, 'show'])->name('users.user');
 
 
-
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

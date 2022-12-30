@@ -81,8 +81,8 @@ class Commenter extends Component
 
     public function delete()
     {
-
-        $this->getDBComments();
+        header('Refresh:0');
+        // $this->getDBComments();
         // foreach ($this->dbComments as $comment) {
         //     if ($comment->) {
         //         # code...
