@@ -91,7 +91,7 @@
     <a href="/posts" class="btn btn-primary ">Go Back</a>
 </form> --}}
 
-    @livewire('commenter', ['users' => $users, 'post' => $post, 'oldComments' => $comments->where('post_id', '=', $post->id)->toArray()])
+ @livewire('commenter', ['users' => $users, 'post' => $post, 'comments' => $comments->where('post_id', '=', $post->id)->toArray()])
 
 
 

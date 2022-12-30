@@ -1,46 +1,26 @@
 <div>
     <h3> Comments </h2>
-        <div class= "container-fluid p-3 border bg-light overflow-auto" style="height: 450px;">
-
-            @foreach ($oldComments as $oldComment)
+        
+        <div class= "container-fluid p-3 border bg-light overflow-auto" style="max-height: 450px;">
+            @foreach ($comments as $comment)
             
                 @foreach ($users as $user) 
 
 
-                    @if ($user->id == $oldComment['user_id']   )
+                    @if ($user->id == $comment['user_id']   )
                         <a href="{{ route('users.user', ['user' => $user]) }}">{{ $user->name }} </a>
                         <p></p>
             
                     @endif
                 @endforeach
                 
-                {{$oldComment['body']}}
-                @if ($oldComment['user_id'] == auth()->user()->id)
-                    {{-- <p></p> --}}
-                    {{-- <button wire:click="delete" class = "btn btn-danger"> Delete </button> --}}
-                @endif
-                <hr/>
-            @endforeach
-
-
-            @foreach ($comments as $comment)
-
-                @foreach ($users as $user) 
-                    @if ($user->id == $comment['user_id']   )
-                        <a href="{{ route('users.user', ['user' => $user]) }}">{{ $user->name }} </a>
-                        <p></p>
-                    @endif
-                @endforeach
-
-
-
                 {{$comment['body']}}
                 @if ($comment['user_id'] == auth()->user()->id)
-                    {{-- <p></p> --}}
-                    {{--<button wire:click="delete" class = "btn btn-danger"> Delete </button> --}}
+                    <p></p>
+                    <button wire:click="delete({{ $comment['id'] }})" class = "btn btn-danger"> Delete </button>
                 @endif
                 <hr/>
-            @endforeach
+            @endforeach 
         </div>
 
 
@@ -51,7 +31,5 @@
         <a href="/posts" class="btn btn-primary ">Go Back</a>
     </form>
 
-    @foreach ($comments as $comment)
-         
-    @endforeach
+    
 </div>

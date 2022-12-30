@@ -15,13 +15,12 @@ class Commenter extends Component
     public $users;
     public $post;
 
-    public $oldComments;
+    public $comments;
 
     public $dbComments;
 
-    
+    protected $listeners = ['refreshComponent' => '$refresh'];
 
-    public $comments = [];
 
     //public $commentsAsArray = $this->comments->get()->toArray();
 
@@ -30,18 +29,14 @@ class Commenter extends Component
     public $userEmail;
 
 
+
     public function addComment()
     {
 
         if ($this->newComment) {
 
 
-            $this->comments[] = [
-                'body' => $this->newComment,
-                'post_id' => $this->post->id,
-                'user_id' => auth()->user()->id,
-
-            ];
+            
 
             $c = [
                 'body' => $this->newComment,
@@ -52,6 +47,11 @@ class Commenter extends Component
 
 
             Comment::create($c);
+            
+            // $this->comments = Comment::where('post_id', '=', $this->post->id)->get()->toArray();
+
+            // $this->emitSelf("refreshComponent");
+            $this->refresh();
 
 
             foreach ($this->users as $postUser) {
@@ -67,7 +67,11 @@ class Commenter extends Component
             }
             
             $this->newComment = "";
+
+            
         }
+
+        
 
 
 
@@ -79,16 +83,11 @@ class Commenter extends Component
         
     }
 
-    public function delete()
+    public function delete($cid)
     {
-        header('Refresh:0');
-        // $this->getDBComments();
-        // foreach ($this->dbComments as $comment) {
-        //     if ($comment->) {
-        //         # code...
-        //     }
-        // }
-
+        $comment = Comment::findOrFail($cid);
+        $comment->delete();
+        $this->refresh();
 
 
 
@@ -97,7 +96,8 @@ class Commenter extends Component
 
     public function refresh()
     {
-        return redirect(request()->header('Referer'));
+        $this->comments = Comment::where('post_id', '=', $this->post->id)->get()->toArray();
+        $this->emitSelf("refreshComponent");
     }
 
     public function getDBComments()

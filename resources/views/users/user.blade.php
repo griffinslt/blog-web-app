@@ -69,7 +69,7 @@
     <h3>Comments</h3>
 
     @if ($comments->where('user_id', '=', $user->id)->count() > 0)
-        <div class="container-fluid p-3 border bg-light overflow-auto" style="height: 450px;">
+        <div class="container-fluid p-3 border bg-light overflow-auto" style="max-height: 450px;">
             <ul>
 
 
