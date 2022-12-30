@@ -23,8 +23,20 @@
         $pics = App\Models\PostPicture::where('post_id', '=', $post->id)->get();
     @endphp
     @foreach ($pics as $pic)
+
         <img src="{{ $pic->file_path }}">
+        @if (auth()->user()->id == $post->user_id)
+        <form action=" {{ route('post-picture.destroy', ['post' => $post->id, 'picture' => $pic->id]) }}" method="post">
+            @csrf
+            @method('delete')
+            <button type="submit" class="btn btn-danger"> Delete Picture </button>
+        </form>
+        <p></p>
+        @endif
+       
     @endforeach
+
+    <hr/>
 
     @if ($post->user_id == auth()->user()->id)
         <form action=" {{ route('posts.destroy', ['post' => $post->id]) }}" method="post">
