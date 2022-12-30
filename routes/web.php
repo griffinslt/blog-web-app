@@ -3,6 +3,7 @@
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfilePictureController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\PostPictureController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -37,6 +38,9 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/profile-picture-input/{user}', [ProfilePictureController::class, 'index'])->name('profilePicture.index');
 Route::post('/upload-profile-picture/{user}', [ProfilePictureController::class, 'store'])->name('profilePicture.store');
+
+Route::get('/post-picture-input/{user}/{post}', [PostPictureController::class, 'index'])->name('postPicture.index');
+Route::post('/upload-post-picture/{post}', [PostPictureController::class, 'store'])->name('post-picture.store');
 
 Route::post('/posts', [CommentController::class, 'store'])->name('comments.store');
 

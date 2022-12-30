@@ -4,6 +4,7 @@
 
 @section('content')
 
+
     <h1> {{ $post->title }} </h1>
     <p> <strong> by
             @foreach ($users as $user)
@@ -16,6 +17,15 @@
     <p></p>
     <p></p>
     <p> {{ $post->body }} </p>
+
+
+    @php
+        $pics = App\Models\PostPicture::where('post_id', '=', $post->id)->get();
+    @endphp
+    @foreach ($pics as $pic)
+        <img src="{{ $pic->file_path }}">
+    @endforeach
+
     @if ($post->user_id == auth()->user()->id)
         <form action=" {{ route('posts.destroy', ['post' => $post->id]) }}" method="post">
             <a class="btn btn-success" href=" {{ route('posts.edits.edit', ['post' => $post]) }} ">Edit</a>
@@ -23,19 +33,12 @@
             @method('delete')
             <button type="submit" class="btn btn-danger"> Delete </button>
         </form>
-    
+        <p></p>
+        <a class="btn btn-info "href="{{ route('postPicture.index', ['user' => auth()->user()->id, 'post' => $post->id]) }}">Upload
+            an Image</a>
+        <hr />
     @endif
 
-    @php
-        $pics = App\Models\PostPicture::where('post_id', '=', $post->id)->get()
-    @endphp
-    @foreach ($pics as $pic)
-        <img src="{{ $pic->file_path }}" >
-    @endforeach
-
-
-
-    <hr />
 
 
     {{-- <h3> Comments </h3> --}}
