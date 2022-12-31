@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Comment;
+use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
@@ -33,9 +37,18 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Post $post, Category $category)
     {
-        //
+        try {
+            DB::table('category_post')->insert([
+                'category_id' => $category->id,
+                'post_id' => $post->id,
+            ]);
+        } catch (\Illuminate\Database\QueryException $ex) {
+            //
+        }
+
+        return redirect()->route('posts.post', ['post' => $post->id]);
     }
 
     /**
@@ -78,8 +91,10 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post, Category $category)
     {
-        //
+        $category_post = DB::table('category_post')->where('post_id', '=', $post->id)->where('category_id', '=', $category->id);
+        $category_post->delete();
+        return redirect()->route('posts.post', ['post' => $post->id]);
     }
 }
