@@ -18,7 +18,7 @@
     @if (count($post->categories) > 0)
         <p>Catgory/categories:
             @foreach ($post->categories as $category)
-                {{ $category }},
+                <a class = "btn btn-warning" href="">{{ $category->name }}</a>
             @endforeach
     @endif
 

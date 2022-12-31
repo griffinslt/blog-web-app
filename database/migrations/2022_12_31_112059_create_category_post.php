@@ -17,8 +17,9 @@ return new class extends Migration
             $table->unsignedBigInteger('post_id');
             $table->unsignedBigInteger('category_id');
 
-            $table->foreign('post_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('category_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');
+            $table->unique(['post_id', 'category_id']);
         });
     }
 

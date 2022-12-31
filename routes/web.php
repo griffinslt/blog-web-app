@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfilePictureController;
 use App\Http\Controllers\PostController;
@@ -42,6 +43,8 @@ Route::post('/upload-profile-picture/{user}', [ProfilePictureController::class, 
 Route::get('/post-picture-input/{user}/{post}', [PostPictureController::class, 'index'])->name('postPicture.index');
 Route::post('/upload-post-picture/{post}', [PostPictureController::class, 'store'])->name('post-picture.store');
 Route::delete('/posts/{post}/{picture}', [PostPictureController::class, 'destroy'])->name('post-picture.destroy');
+
+Route::get('posts/category/{category}', [CategoryController::class, 'index'])->name('category');
 
 Route::post('/posts', [CommentController::class, 'store'])->name('comments.store');
 
