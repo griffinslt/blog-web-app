@@ -22,4 +22,9 @@ class Post extends Model
     public function postPictures(){
         return $this->hasMany(PostPicture::class);
     }
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class);
+    }
 }
