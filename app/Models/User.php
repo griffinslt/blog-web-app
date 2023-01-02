@@ -47,9 +47,7 @@ class User extends Authenticatable
     /**
      * The relation that a user has with profile picture
      */
-    public function profilePicture(){
-        return $this->hasOne(ProfilePicture::class);
-    }
+    
 
     public function posts(){
         return $this->hasMany(Post::class);

@@ -9,6 +9,12 @@ class Post extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'title',
+        'body',
+        'user_id',
+    ];
+
     
 
     public function user(){
@@ -19,9 +25,6 @@ class Post extends Model
         return $this->hasMany(Comment::class);
     }
 
-    public function postPictures(){
-        return $this->hasMany(PostPicture::class);
-    }
 
     public function categories()
     {

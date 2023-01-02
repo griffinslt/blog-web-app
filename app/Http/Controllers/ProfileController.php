@@ -24,9 +24,8 @@ class ProfileController extends Controller
     public function show(User $user)
     {
         $posts = Post::all();
-        $profilePictures = ProfilePicture::all();
         $comments = Comment::all();
-        return view('users.user', ['user' => $user, 'posts' => $posts, 'profilePictures' => $profilePictures, 'comments' => $comments]);
+        return view('users.user', ['user' => $user, 'posts' => $posts, 'comments' => $comments]);
     }
     /**
      * Display the user's profile form.
