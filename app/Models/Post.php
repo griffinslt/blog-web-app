@@ -28,4 +28,9 @@ class Post extends Model
         return $this->belongsToMany(Category::class);
     }
 
+    public function pictures()
+    {
+        return $this->morphMany(Picture::class, 'pictureable');
+    }
+
 }

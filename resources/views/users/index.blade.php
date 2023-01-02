@@ -21,6 +21,9 @@
                             @method('delete')
                             <button type="submit" class="btn btn-danger btn-sm"> Delete User</button>
                         </form>
+                    @else
+                        <p class = "text-white">.</p>
+                        <p></p>
                     @endif
                 </div>
             </div>
