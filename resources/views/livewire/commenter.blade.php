@@ -11,7 +11,9 @@
                 @endforeach
 
                 {{ $comment['body'] }}
-                @if ($comment['user_id'] == auth()->user()->id)
+                @if ($comment['user_id'] == auth()->user()->id or
+                    auth()->user()->roles->contains('role_name', 'admin') or
+                    auth()->user()->roles->contains('role_name', 'comment_moderator'))
                     <p></p>
                     <button wire:click="delete({{ $comment['id'] }})" class="btn btn-danger"> Delete </button>
                     <button wire:click="update({{ $comment['id'] }})" class="btn btn-success"> Update </button>

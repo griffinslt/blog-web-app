@@ -16,17 +16,20 @@ class RoleSeeder extends Seeder
     public function run()
     {
         $admin = new Role;
-        $admin->role = 'admin';
+        $admin->role_name = 'admin';
+        $admin->save();
 
         $post_moderator = new Role;
-        $post_moderator->role = 'post_moderator';
+        $post_moderator->role_name = 'post_moderator';
+        $post_moderator->save();
 
         $comment_moderator = new Role;
-        $comment_moderator->role = 'comment_moderator';
-
+        $comment_moderator->role_name = 'comment_moderator';
+        $comment_moderator->save();
 
         $normal_user = new Role;
-        $normal_user->role = 'normal';
+        $normal_user->role_name = 'normal';
+        $normal_user->save();
 
 
 

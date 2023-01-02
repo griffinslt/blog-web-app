@@ -58,6 +58,15 @@ class Commenter extends Component
         }
     }
 
+    private function getUserRoles()
+    {
+        $roles = [];
+        foreach (auth()->user()->roles as $role) {
+            array_push($roles, $role->role_name);
+        }
+        return implode(", ",$roles);
+
+    }
 
     private function emailNew()
     {
@@ -68,7 +77,9 @@ class Commenter extends Component
             }
         }
         if (auth()->user()->email != $this->userEmail) {
-            Mail::raw(auth()->user()->name . " said the following on your post '" . $this->post->title . "': \n'" . $this->newComment."'", function (Message $message) {
+            Mail::raw(auth()->user()->name . " (".
+            $this->getUserRoles().
+            ") said the following on your post '" . $this->post->title . "': \n'" . $this->newComment."'", function (Message $message) {
                 $message->to($this->userEmail);
             });
         }
@@ -80,7 +91,9 @@ class Commenter extends Component
 
         $this->userEmail = User::where('id', '=', $this->post['user_id'])->first()->email;
         if (auth()->user()->email != $this->userEmail) {
-            Mail::raw(auth()->user()->name . " updated their comment from  '".$this->oldComment."' to '".$this->newComment."' on your post '". $this->post->title."'" , function (Message $message) {
+            Mail::raw(auth()->user()->name . " (".
+            $this->getUserRoles().
+            ") updated a comment from  '".$this->oldComment."' to '".$this->newComment."' on your post '". $this->post->title."'" , function (Message $message) {
                 $message->to($this->userEmail);
             });
         }
@@ -90,7 +103,9 @@ class Commenter extends Component
     {
         $this->userEmail = User::where('id', '=', $this->post['user_id'])->first()->email;
         if (auth()->user()->email != $this->userEmail) {
-            Mail::raw(auth()->user()->name . " deleted their comment '".$this->oldComment."' on your post '". $this->post->title."'" , function (Message $message) {
+            Mail::raw(auth()->user()->name . " (".
+            $this->getUserRoles().
+            ") deleted a comment '".$this->oldComment."' on your post '". $this->post->title."'" , function (Message $message) {
                 $message->to($this->userEmail);
             });
         }

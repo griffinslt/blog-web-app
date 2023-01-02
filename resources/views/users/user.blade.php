@@ -22,9 +22,11 @@
             @php
                 $found = true;
             @endphp
-            @if (auth()->user()->id == $profilePicture->user_id)
+            @if (auth()->user()->id == $profilePicture->user_id or
+                auth()->user()->roles->contains('role_name', 'admin'))
                 <p></p>
-                <a class="btn btn-success" href="{{ route('profilePicture.index', ['user' => $user->id]) }}">Change Profile Picture</a>
+                <a class="btn btn-success" href="{{ route('profilePicture.index', ['user' => $user->id]) }}">Change Profile
+                    Picture</a>
                 <p></p>
                 @php
                     break;

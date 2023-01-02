@@ -6,6 +6,8 @@ namespace Database\Seeders;
 
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -24,8 +26,9 @@ class DatabaseSeeder extends Seeder
         $this->call(CommentSeeder::class);
         $this->call(PostPictureSeeder::class);
         $this->call(CategorySeeder::class);
+        $this->call(RoleSeeder::class);
 
-        foreach (range(1, 100) as $index) {
+        foreach (range(1, 200) as $_) {
             try {
                 DB::table('category_post')->insert([
                     'category_id' => rand(1, count(Category::all()) - 1),
@@ -33,6 +36,40 @@ class DatabaseSeeder extends Seeder
                 ]);
             } catch (\Illuminate\Database\QueryException $ex) {
                 //
+            }
+        }
+
+        $users = User::all();
+        $roles = Role::all();
+
+        DB::table('role_user')->insert([
+            'user_id' => 1,
+            'role_id' => $roles->where('role_name', '=', 'admin')->first()->id,
+        ]);
+
+        DB::table('role_user')->insert([
+            'user_id' => 2,
+            'role_id' => $roles->where('role_name', '=', 'comment_moderator')->first()->id,
+        ]);
+
+        DB::table('role_user')->insert([
+            'user_id' => 2,
+            'role_id' => $roles->where('role_name', '=', 'post_moderator')->first()->id,
+        ]);
+
+        DB::table('role_user')->insert([
+            'user_id' => 3,
+            'role_id' => $roles->where('role_name', '=', 'comment_moderator')->first()->id,
+        ]);
+
+
+
+        foreach ($users as $user) {
+            if ($user->email != 'admin@blogs.com') {
+                DB::table('role_user')->insert([
+                    'user_id' => $user->id,
+                    'role_id' => $roles->where('role_name', '=', 'normal')->first()->id,
+                ]);
             }
         }
     }

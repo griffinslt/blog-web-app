@@ -4,7 +4,9 @@
 
 
 @section('content')
-    @if (auth()->user()->id == $user->id)
+    @if (auth()->user()->id == $user->id or
+        auth()->user()->roles->contains('role_name', 'admin') or
+        auth()->user()->roles->contains('role_name', 'post_moderator'))
         <h1>Image Upload</h1>
 
 

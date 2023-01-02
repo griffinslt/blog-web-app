@@ -17,20 +17,23 @@
     <p></p>
     @if (count($post->categories) > 0)
         <p> <strong>Category/categories:</strong></p>
-            @foreach ($post->categories as $category)
-                <a class="btn btn-warning" href="{{route('category', ['category' => $category->id])}}">{{ $category->name }}</a>
-                @if ($post->user_id == auth()->user()->id)
-                    <form action="{{route('category_post.destroy', ['post' => $post->id, 'category' => $category->id])}}" method="post" style="display: inline;">
-                        @csrf
-                        @method('delete')
-                        <button type="submit" class="btn btn-danger btn-sm"> x </button>
-                    </form>
-                @endif
-            @endforeach
+        @foreach ($post->categories as $category)
+            <a class="btn btn-warning" href="{{ route('category', ['category' => $category->id]) }}">{{ $category->name }}</a>
+            @if ($post->user_id == auth()->user()->id or
+                auth()->user()->roles->contains('role_name', 'admin') or
+                auth()->user()->roles->contains('role_name', 'post_moderator'))
+                <form action="{{ route('category_post.destroy', ['post' => $post->id, 'category' => $category->id]) }}"
+                    method="post" style="display: inline;">
+                    @csrf
+                    @method('delete')
+                    <button type="submit" class="btn btn-danger btn-sm"> x </button>
+                </form>
+            @endif
+        @endforeach
     @endif
 
 
-    
+
     <p></p>
     <p> {{ $post->body }} </p>
 
@@ -40,7 +43,9 @@
     @endphp
     @foreach ($pics as $pic)
         <img src="{{ $pic->file_path }}">
-        @if (auth()->user()->id == $post->user_id)
+        @if (auth()->user()->id == $post->user_id or
+            auth()->user()->roles->contains('role_name', 'admin') or
+            auth()->user()->roles->contains('role_name', 'post_moderator'))
             <form action=" {{ route('post-picture.destroy', ['post' => $post->id, 'picture' => $pic->id]) }}" method="post">
                 @csrf
                 @method('delete')
@@ -53,7 +58,9 @@
 
     <hr />
 
-    @if ($post->user_id == auth()->user()->id)
+    @if ($post->user_id == auth()->user()->id or
+        auth()->user()->roles->contains('role_name', 'admin') or
+        auth()->user()->roles->contains('role_name', 'post_moderator'))
         <form action=" {{ route('posts.destroy', ['post' => $post->id]) }}" method="post">
             <a class="btn btn-success" href=" {{ route('posts.edits.edit', ['post' => $post]) }} ">Edit Post</a>
             @csrf
@@ -65,24 +72,26 @@
             class="btn btn-info "href="{{ route('postPicture.index', ['user' => auth()->user()->id, 'post' => $post->id]) }}">Upload
             an Image</a>
 
-        
 
 
-<div class="btn-group">
-    <button type="button" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-        Add a Category
-    </button>
-    <ul class="dropdown-menu">
-        @foreach (App\Models\Category::all() as $category)
-                <li><a class="dropdown-item" href="{{ route('add-category', ['post' => $post, 'category' => $category])  }}">{{ $category->name }}</a></li>
-            @endforeach
 
-    </ul>
-  </div>
+        <div class="btn-group">
+            <button type="button" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                Add a Category
+            </button>
+            <ul class="dropdown-menu">
+                @foreach (App\Models\Category::all() as $category)
+                    <li><a class="dropdown-item"
+                            href="{{ route('add-category', ['post' => $post, 'category' => $category]) }}">{{ $category->name }}</a>
+                    </li>
+                @endforeach
 
-           
+            </ul>
+        </div>
 
-        
+
+
+
 
 
 
@@ -93,5 +102,5 @@
 
     @livewire('commenter', ['users' => $users, 'post' => $post, 'comments' => $comments->where('post_id', '=', $post->id)->toArray()])
 
-   
+
 @endsection

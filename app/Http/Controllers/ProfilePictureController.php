@@ -17,7 +17,7 @@ class ProfilePictureController extends Controller
      */
     public function index(User $user)
     {
-        return view('profile-picture-input', ['user'=>$user]);
+        return view('profile-picture-input', ['user' => $user]);
     }
 
     /**
@@ -38,17 +38,16 @@ class ProfilePictureController extends Controller
      */
     public function store(Request $request, User $user)
     {
-
         $validatedData = $request->validate([
             'image' => 'required|image|mimes:png,jpg,jpeg|max:2048',
         ]);
 
-
-        
         $image = $validatedData['image'];
-        $imageName = time().'.'.$image->extension();
-        $image->move( public_path('images'),$imageName);
-        ProfilePicture::where('user_id', "=", $user->id)->first()->update(array('file_path' => url('images/'.$imageName)));
+        $imageName = time() . '.' . $image->extension();
+        $image->move(public_path('images'), $imageName);
+        ProfilePicture::where('user_id', '=', $user->id)
+            ->first()
+            ->update(['file_path' => url('images/' . $imageName)]);
         $posts = Post::all();
         $profilePictures = ProfilePicture::all();
         $comments = Comment::all();

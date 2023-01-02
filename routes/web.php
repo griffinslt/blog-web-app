@@ -36,7 +36,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-
 Route::get('/profile-picture-input/{user}', [ProfilePictureController::class, 'index'])->name('profilePicture.index');
 Route::post('/upload-profile-picture/{user}', [ProfilePictureController::class, 'store'])->name('profilePicture.store');
 
@@ -69,6 +68,5 @@ Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.
 Route::get('/users', [UserController::class, 'index'])->name('users.index');
 
 Route::get('/users/{user}', [UserController::class, 'show'])->name('users.user');
-
 
 require __DIR__ . '/auth.php';
