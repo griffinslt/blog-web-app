@@ -25,6 +25,11 @@ class ProfilePictureSeeder extends Seeder
         $p2->user_id = 2;
         $p2->save();
 
+        $p3 = new ProfilePicture;
+        $p3->file_path = 'https://via.placeholder.com/300/09f.png/fff';
+        $p3->user_id = 3;
+        $p3->save();
+
 
     }
 }

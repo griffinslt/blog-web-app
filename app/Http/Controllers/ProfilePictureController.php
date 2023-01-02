@@ -38,20 +38,30 @@ class ProfilePictureController extends Controller
      */
     public function store(Request $request, User $user)
     {
-        $validatedData = $request->validate([
-            'image' => 'required|image|mimes:png,jpg,jpeg|max:2048',
-        ]);
+        if (
+            $user->id == auth()->user()->id or
+                auth()
+                ->user()
+                ->roles->contains(
+                    'role_name',
+                    'admin'
+                )
+        ) {
+            $validatedData = $request->validate([
+                'image' => 'required|image|mimes:png,jpg,jpeg|max:2048',
+            ]);
 
-        $image = $validatedData['image'];
-        $imageName = time() . '.' . $image->extension();
-        $image->move(public_path('images'), $imageName);
-        ProfilePicture::where('user_id', '=', $user->id)
-            ->first()
-            ->update(['file_path' => url('images/' . $imageName)]);
-        $posts = Post::all();
-        $profilePictures = ProfilePicture::all();
-        $comments = Comment::all();
-        return view('users.user', ['user' => $user, 'posts' => $posts, 'profilePictures' => $profilePictures, 'comments' => $comments]);
+            $image = $validatedData['image'];
+            $imageName = time() . '.' . $image->extension();
+            $image->move(public_path('images'), $imageName);
+            ProfilePicture::where('user_id', '=', $user->id)
+                ->first()
+                ->update(['file_path' => url('images/' . $imageName)]);
+            $posts = Post::all();
+            $profilePictures = ProfilePicture::all();
+            $comments = Comment::all();
+            return view('users.user', ['user' => $user, 'posts' => $posts, 'profilePictures' => $profilePictures, 'comments' => $comments]);
+        }
     }
 
     /**

@@ -85,8 +85,17 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        if (
+            auth()
+                ->user()
+                ->roles->contains('role_name', 'admin')
+        ) {
+            $user->delete();
+            return redirect()
+                ->route('users.index')
+                ->with('message', 'User was Deleted.');
+        }
     }
 }

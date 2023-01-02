@@ -38,24 +38,36 @@ class PostPictureController extends Controller
      */
     public function store(Request $request, Post $post)
     {
+        if (
+            $post->user_id == auth()->user()->id or
+                auth()
+                ->user()
+                ->roles->contains(
+                    'role_name',
+                    'admin' or
+                        auth()
+                        ->user()
+                        ->roles->contains('role_name', 'post_moderator'),
+                )
+        ) {
 
-        $validatedData = $request->validate([
-            'image' => 'required|image|mimes:png,jpg,jpeg|max:2048',
-        ]);
-        $image = $validatedData['image'];
-        $imageName = time().'.'.$image->extension();
-        $image->move( public_path('images'),$imageName);
+            $validatedData = $request->validate([
+                'image' => 'required|image|mimes:png,jpg,jpeg|max:2048',
+            ]);
+            $image = $validatedData['image'];
+            $imageName = time() . '.' . $image->extension();
+            $image->move(public_path('images'), $imageName);
 
-        $pp = new PostPicture;
-        $pp->file_path = url('images/' . $imageName);
-        $pp->post_id = $post->id;
-        $pp->save();
+            $pp = new PostPicture;
+            $pp->file_path = url('images/' . $imageName);
+            $pp->post_id = $post->id;
+            $pp->save();
 
 
 
-        $users = User::all();
-        $comments = Comment::all();
-        return redirect()->route('posts.post', ['post' => $post]);
+            
+            return redirect()->route('posts.post', ['post' => $post]);
+        }
     }
 
     /**
@@ -100,8 +112,21 @@ class PostPictureController extends Controller
      */
     public function destroy(Post $post, PostPicture $picture)
     {
-        $picture->delete();
-        return redirect()->route('posts.post', ['post' => $post->id]);
-        
+        if (
+            $post->user_id == auth()->user()->id or
+                auth()
+                ->user()
+                ->roles->contains(
+                    'role_name',
+                    'admin' or
+                        auth()
+                        ->user()
+                        ->roles->contains('role_name', 'post_moderator'),
+                )
+        ) {
+            $picture->delete();
+            return redirect()->route('posts.post', ['post' => $post->id]);
+
+        }
     }
 }

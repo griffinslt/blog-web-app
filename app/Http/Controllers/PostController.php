@@ -18,7 +18,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::paginate(15) ;
+        $posts = Post::paginate(15);
         $users = User::all();
         return view('posts.index', ['posts' => $posts, 'users' => $users]);
     }
@@ -41,14 +41,12 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        
         $validatedData = $request->validate([
             'title' => 'required|max:255',
             'body' => 'required',
         ]);
 
-
-        $p = new Post;
+        $p = new Post();
         $p->title = $validatedData['title'];
         $p->body = $validatedData['body'];
         $p->user_id = Auth::user()->id;
@@ -56,10 +54,8 @@ class PostController extends Controller
 
         $pid = Post::latest()->first()->id;
 
-
         session()->flash('message', 'Post Created');
         return redirect()->route('posts.post', ['post' => $pid]);
-
     }
 
     /**
@@ -72,7 +68,7 @@ class PostController extends Controller
     {
         $users = User::all();
         $comments = Comment::all();
-        return view('posts.post', ['post' => $post, 'users' => $users, 'comments' => $comments ]);
+        return view('posts.post', ['post' => $post, 'users' => $users, 'comments' => $comments]);
     }
 
     /**
@@ -102,16 +98,29 @@ class PostController extends Controller
         ]);
 
         $p = Post::findOrFail($validatedData['post_id']);
+        if (
+            $p->user_id == auth()->user()->id or
+            auth()
+                ->user()
+                ->roles->contains(
+                    'role_name',
+                    'admin' or
+                        auth()
+                            ->user()
+                            ->roles->contains('role_name', 'post_moderator'),
+                )
+        ) {
+            # code...
 
-        $p->title = $validatedData['title'];
-        $p->body = $validatedData['body'];
-        $p->save();
+            $p->title = $validatedData['title'];
+            $p->body = $validatedData['body'];
+            $p->save();
 
-        $pid = Post::latest()->first()->id;
+            $pid = Post::latest()->first()->id;
 
-
-        session()->flash('message', 'Post Updated');
-        return redirect()->route('posts.post', ['post' => $pid]);
+            session()->flash('message', 'Post Updated');
+            return redirect()->route('posts.post', ['post' => $pid]);
+        }
     }
 
     /**
@@ -122,34 +131,47 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        $post->delete();
+        if (
+            $post->user_id == auth()->user()->id or
+                auth()
+                ->user()
+                ->roles->contains(
+                    'role_name',
+                    'admin' or
+                        auth()
+                        ->user()
+                        ->roles->contains('role_name', 'post_moderator'),
+                )
+        ) {
+            $post->delete();
 
-        return redirect()->route('posts.index')->with('message', 'post was Deleted.');
+            return redirect()
+                ->route('posts.index')
+                ->with('message', 'Post was Deleted.');
+        }
     }
 
+    // public function commentStore(Request $request)
+    // {
+    //     $validatedData = $request->validate([
+    //         'body' => 'required',
+    //         'post_id' => 'required',
+    //     ]);
 
-    public function commentStore(Request $request)
-    {
-        $validatedData = $request->validate([
-            'body' => 'required',
-            'post_id' => 'required',
-        ]);
+    //     $c = new Comment();
+    //     $c->body = $validatedData['body'];
+    //     $c->user_id = Auth::user()->id;
+    //     $c->post_id = $validatedData['post_id'];
+    //     $c->save();
 
+    //     session()->flash('message', 'Comment Created');
+    //     return redirect()->back();
+    // }
 
-        $c = new Comment();
-        $c->body = $validatedData['body'];
-        $c->user_id = Auth::user()->id;
-        $c->post_id = $validatedData['post_id'];
-        $c->save();
-
-        session()->flash('message', 'Comment Created');
-        return redirect()->back();
-    }
-
-    public function commentDestroy($id)
-    {
-        $comment = Comment::findOrFail($id);
-        $comment->delete();
-        return redirect()->back();
-    }
+    // public function commentDestroy($id)
+    // {
+    //     $comment = Comment::findOrFail($id);
+    //     $comment->delete();
+    //     return redirect()->back();
+    // }
 }

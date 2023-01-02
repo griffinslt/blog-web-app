@@ -39,13 +39,26 @@ class CategoryController extends Controller
      */
     public function store(Post $post, Category $category)
     {
-        try {
-            DB::table('category_post')->insert([
-                'category_id' => $category->id,
-                'post_id' => $post->id,
-            ]);
-        } catch (\Illuminate\Database\QueryException $ex) {
-            //
+        if (
+            $post->user_id == auth()->user()->id or
+                auth()
+                ->user()
+                ->roles->contains(
+                    'role_name',
+                    'admin' or
+                        auth()
+                        ->user()
+                        ->roles->contains('role_name', 'post_moderator'),
+                )
+        ) {
+            try {
+                DB::table('category_post')->insert([
+                    'category_id' => $category->id,
+                    'post_id' => $post->id,
+                ]);
+            } catch (\Illuminate\Database\QueryException $ex) {
+                //
+            }
         }
 
         return redirect()->route('posts.post', ['post' => $post->id]);
@@ -93,8 +106,22 @@ class CategoryController extends Controller
      */
     public function destroy(Post $post, Category $category)
     {
-        $category_post = DB::table('category_post')->where('post_id', '=', $post->id)->where('category_id', '=', $category->id);
-        $category_post->delete();
-        return redirect()->route('posts.post', ['post' => $post->id]);
+
+        if (
+            $post->user_id == auth()->user()->id or
+                auth()
+                ->user()
+                ->roles->contains(
+                    'role_name',
+                    'admin' or
+                        auth()
+                        ->user()
+                        ->roles->contains('role_name', 'post_moderator'),
+                )
+        ) {
+            $category_post = DB::table('category_post')->where('post_id', '=', $post->id)->where('category_id', '=', $category->id);
+            $category_post->delete();
+            return redirect()->route('posts.post', ['post' => $post->id]);
+        }
     }
 }

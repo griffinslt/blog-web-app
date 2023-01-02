@@ -3,12 +3,31 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Comment;
+use App\Models\Post;
+use App\Models\ProfilePicture;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
 class ProfileController extends Controller
 {
+
+
+    public function index()
+    {
+        $users = User::all();
+        return view('users.index', ['users' => $users]);
+    }
+
+    public function show(User $user)
+    {
+        $posts = Post::all();
+        $profilePictures = ProfilePicture::all();
+        $comments = Comment::all();
+        return view('users.user', ['user' => $user, 'posts' => $posts, 'profilePictures' => $profilePictures, 'comments' => $comments]);
+    }
     /**
      * Display the user's profile form.
      *

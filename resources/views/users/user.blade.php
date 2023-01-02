@@ -13,15 +13,10 @@
 
 
     <h1>Account Details</h1>
-    @php
-        $found = false;
-    @endphp
+
     @foreach ($profilePictures as $profilePicture)
         @if ($profilePicture->user_id == $user->id)
             <img src="{{ $profilePicture->file_path }}" class="img-thumbnail" width="300" height="300">
-            @php
-                $found = true;
-            @endphp
             @if (auth()->user()->id == $profilePicture->user_id or
                 auth()->user()->roles->contains('role_name', 'admin'))
                 <p></p>
@@ -35,18 +30,6 @@
         @endif
     @endforeach
 
-
-    @if ($found == false)
-        @php
-            $pp = [
-                'user_id' => $user->id,
-                'file_path' => url('images/blank-profile-picture.png'),
-            ];
-            App\Models\ProfilePicture::create($pp);
-            header('Refresh:0');
-            
-        @endphp
-    @endif
 
 
     <ul>

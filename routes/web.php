@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfilePictureController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostPictureController;
@@ -47,10 +46,6 @@ Route::get('posts/category/{category}', [CategoryController::class, 'index'])->n
 Route::get('posts/{post}/add-category/{category}', [CategoryController::class, 'store'])->name('add-category');
 Route::delete('posts/{post}/remove/{category}', [CategoryController::class, 'destroy'])->name('category_post.destroy');
 
-Route::post('/posts', [CommentController::class, 'store'])->name('comments.store');
-
-Route::delete('/posts/{post}', [CommentController::class, 'destroy'])->name('comments.destroy');
-
 Route::post('/posts/update', [PostController::class, 'update'])->name('posts.update');
 
 Route::get('/posts/edits/{post}', [PostController::class, 'edit'])->name('posts.edits.edit');
@@ -65,8 +60,10 @@ Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.post')
 
 Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
 
-Route::get('/users', [UserController::class, 'index'])->name('users.index');
+Route::get('/users', [ProfileController::class, 'index'])->name('users.index');
 
-Route::get('/users/{user}', [UserController::class, 'show'])->name('users.user');
+Route::get('/users/{user}', [ProfileController::class, 'show'])->name('users.user');
+
+Route::delete('/user/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 
 require __DIR__ . '/auth.php';
