@@ -55,10 +55,10 @@
 
     @if ($post->user_id == auth()->user()->id)
         <form action=" {{ route('posts.destroy', ['post' => $post->id]) }}" method="post">
-            <a class="btn btn-success" href=" {{ route('posts.edits.edit', ['post' => $post]) }} ">Edit</a>
+            <a class="btn btn-success" href=" {{ route('posts.edits.edit', ['post' => $post]) }} ">Edit Post</a>
             @csrf
             @method('delete')
-            <button type="submit" class="btn btn-danger"> Delete </button>
+            <button type="submit" class="btn btn-danger"> Delete Post</button>
         </form>
         <p></p>
         <a

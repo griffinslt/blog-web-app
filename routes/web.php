@@ -46,7 +46,7 @@ Route::delete('/posts/{post}/{picture}', [PostPictureController::class, 'destroy
 
 Route::get('posts/category/{category}', [CategoryController::class, 'index'])->name('category');
 Route::get('posts/{post}/add-category/{category}', [CategoryController::class, 'store'])->name('add-category');
-Route::delete('posts/{post}{category}', [CategoryController::class, 'destroy'])->name('category_post.destroy');
+Route::delete('posts/{post}/remove/{category}', [CategoryController::class, 'destroy'])->name('category_post.destroy');
 
 Route::post('/posts', [CommentController::class, 'store'])->name('comments.store');
 
