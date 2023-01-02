@@ -9,7 +9,7 @@
         <h1> Users</h1>
         @foreach ($users as $user)
             <div class="card mx-3 my-1" style="width: 18rem; display: inline-block;">
-                <img src="{{ $user->profilePicture->file_path }}" class="card-img-top" width="300" height="300">
+                <img src="{{ $user->picture->file_path }}" class="card-img-top" width="300" height="300">
                 <div class="card-body">
                     <a href="{{ route('users.user', ['user' => $user->id]) }}">
                         <h5>{{ $user->name }}</h5>

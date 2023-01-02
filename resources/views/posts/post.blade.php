@@ -38,10 +38,8 @@
     <p> {{ $post->body }} </p>
 
 
-    @php
-        $pics = App\Models\PostPicture::where('post_id', '=', $post->id)->get();
-    @endphp
-    @foreach ($pics as $pic)
+   
+    @foreach ($post->pictures as $pic)
         <img src="{{ $pic->file_path }}">
         @if (auth()->user()->id == $post->user_id or
             auth()->user()->roles->contains('role_name', 'admin') or

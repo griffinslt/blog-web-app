@@ -46,14 +46,10 @@ class UserSeeder extends Seeder
                     ->state(function (array $attributes, User $user) {
                         return ['user_id' => $user->id];
                     })
-                    ->hasPostPictures(2, function (array $attributes, Post $post) {
-                        return ['post_id' => $post->id];
-                    }),
+                    ->hasPictures(2)
             )
 
-            ->hasProfilePicture(1, function (array $attributes, User $user) {
-                return ['user_id' => $user->id];
-            })
+            ->hasPicture(1)
             ->count(20)
             ->create();
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\Picture;
 use App\Models\Post;
 use App\Models\PostPicture;
 use App\Models\User;
@@ -58,10 +59,13 @@ class PostPictureController extends Controller
             $imageName = time() . '.' . $image->extension();
             $image->move(public_path('images'), $imageName);
 
-            $pp = new PostPicture;
+            $pp = new Picture;
             $pp->file_path = url('images/' . $imageName);
-            $pp->post_id = $post->id;
+            $pp->pictureable_id = $post->id;
+            $pp->pictureable_type = Post::class;
             $pp->save();
+
+
 
 
 
@@ -110,7 +114,7 @@ class PostPictureController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post, PostPicture $picture)
+    public function destroy(Post $post, Picture $picture)
     {
         if (
             $post->user_id == auth()->user()->id or

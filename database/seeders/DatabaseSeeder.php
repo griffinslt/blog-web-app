@@ -22,11 +22,12 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(UserSeeder::class);
         $this->call(PostSeeder::class);
-        $this->call(ProfilePictureSeeder::class);
+        //$this->call(ProfilePictureSeeder::class);
         $this->call(CommentSeeder::class);
-        $this->call(PostPictureSeeder::class);
+        //$this->call(PostPictureSeeder::class);
         $this->call(CategorySeeder::class);
         $this->call(RoleSeeder::class);
+        $this->call(PictureSeeder::class);
 
         foreach (range(1, 200) as $_) {
             try {
