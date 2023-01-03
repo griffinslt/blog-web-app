@@ -59,5 +59,9 @@ class CategorySeeder extends Seeder
         $c->name = 'Philiosophy';
         $c->save();
 
+        $c = new Category;
+        $c->name = 'Comedy';
+        $c->save();
+
     }
 }

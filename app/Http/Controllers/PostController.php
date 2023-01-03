@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Http\JokeGenerator;
 
 class PostController extends Controller
 {
@@ -123,6 +124,25 @@ class PostController extends Controller
         }
     }
 
+    public function storeJoke(JokeGenerator $j)
+    {
+        $joke = json_decode(file_get_contents($j->apiUrl));
+        $setup = $joke->setup;
+        $punchline = $joke->punchline;
+
+        $p = new Post();
+        $p->title = $setup;
+        $p->body = $punchline;
+        $p->user_id = Auth::user()->id;
+        $p->save();
+
+        $pid = Post::latest()->first()->id;
+        //Add category automatically
+
+        session()->flash('message', 'Post Created');
+        return redirect()->route('posts.post', ['post' => $pid]);
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -133,14 +153,14 @@ class PostController extends Controller
     {
         if (
             $post->user_id == auth()->user()->id or
-                auth()
+            auth()
                 ->user()
                 ->roles->contains(
                     'role_name',
                     'admin' or
                         auth()
-                        ->user()
-                        ->roles->contains('role_name', 'post_moderator'),
+                            ->user()
+                            ->roles->contains('role_name', 'post_moderator'),
                 )
         ) {
             $post->delete();
