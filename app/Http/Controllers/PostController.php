@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\JokeGenerator;
+use App\Models\Category;
 
 class PostController extends Controller
 {
@@ -137,10 +138,14 @@ class PostController extends Controller
         $p->save();
 
         $pid = Post::latest()->first()->id;
-        //Add category automatically
+        $category = Category::where("name", "=", "Comedy")->first();
+
 
         session()->flash('message', 'Post Created');
-        return redirect()->route('posts.post', ['post' => $pid]);
+        return redirect()->route('add-category', ['post' => $pid, 'category' => $category]);
+
+        
+        // return redirect()->route('posts.post', ['post' => $pid]);
     }
 
     /**
