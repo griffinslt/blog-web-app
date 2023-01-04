@@ -112,13 +112,11 @@ class PostController extends Controller
                             ->roles->contains('role_name', 'post_moderator'),
                 )
         ) {
-            # code...
-
             $p->title = $validatedData['title'];
             $p->body = $validatedData['body'];
             $p->save();
 
-            $pid = Post::latest()->first()->id;
+            $pid = Post::orderByDesc('updated_at')->first()->id;
 
             session()->flash('message', 'Post Updated');
             return redirect()->route('posts.post', ['post' => $pid]);
@@ -138,13 +136,11 @@ class PostController extends Controller
         $p->save();
 
         $pid = Post::latest()->first()->id;
-        $category = Category::where("name", "=", "Comedy")->first();
-
+        $category = Category::where('name', '=', 'Comedy')->first();
 
         session()->flash('message', 'Post Created');
         return redirect()->route('add-category', ['post' => $pid, 'category' => $category]);
 
-        
         // return redirect()->route('posts.post', ['post' => $pid]);
     }
 
