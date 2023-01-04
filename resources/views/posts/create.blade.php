@@ -8,7 +8,7 @@
 
     <form method="POST" action="{{ route('posts.store') }}">
         @csrf
-        <p>Title: <input type="text" name="title"></p>
+        <p>Title: <input type="text" name="title" size = '100'></p>
         <p>Body:</p>
         <textarea type="text" class="form-control" name="body" rows="20"></textarea>
         <input type="submit" value="Submit" class="btn btn-primary">

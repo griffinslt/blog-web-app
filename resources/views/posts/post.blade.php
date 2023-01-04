@@ -4,7 +4,7 @@
 
 @section('content')
 
-
+@if (Auth::check())
     <h1> {{ $post->title }} </h1>
     <p> <strong> by
             @foreach ($users as $user)
@@ -100,5 +100,5 @@
 
     @livewire('commenter', ['users' => $users, 'post' => $post, 'comments' => $comments->where('post_id', '=', $post->id)->toArray()])
 
-
+@endif
 @endsection

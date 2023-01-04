@@ -22,7 +22,7 @@
             <li>
                 <hr class="dropdown-divider">
             </li>
-            <li><a class="dropdown-item" href="{{route('posts.index')}} ">All</a></li>
+            <li><a class="dropdown-item" href="{{ route('posts.index') }} ">All</a></li>
         </ul>
     </div>
 
@@ -55,7 +55,6 @@
 
 
     <a class="btn btn-primary" href="{{ route('posts.create') }}">Create Post</a>
-
 
 
 
