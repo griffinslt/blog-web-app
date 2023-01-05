@@ -4,14 +4,11 @@
 
 
 
-    <link rel="icon" type="image/png" href="{{ $user->picture->file_path }}" sizes="16x16">
+<link rel="icon" type="image/png" href="{{ $user->picture->file_path }}" sizes="16x16">
 
 
-    @section('content')
+@section('content')
     @if (Auth::check())
-
-
-
         <h1>Account Details</h1>
 
 
@@ -22,9 +19,6 @@
             <a class="btn btn-success" href="{{ route('profilePicture.index', ['user' => $user->id]) }}">Change Profile
                 Picture</a>
         @endif
-
-
-
 
         <ul>
             <li>Name: {{ $user->name }}</li>
@@ -50,10 +44,6 @@
         @if ($comments->where('user_id', '=', $user->id)->count() > 0)
             <div class="container-fluid p-3 border bg-light overflow-auto" style="max-height: 450px;">
                 <ul>
-
-
-
-
                     @foreach ($comments as $comment)
                         @if ($comment->user_id == $user->id)
                             @foreach ($posts as $post)
@@ -67,27 +57,23 @@
                             @endforeach
                         @endif
                     @endforeach
-
-
                 </ul>
             </div>
         @else
             <p>No Comments yet</p>
 
         @endif
-
     @else
-
-    <div class="alert alert-warning" role="alert">
-        You are not logged in.
-    </div>
-    <div class="card">
-
-        <div class="card-body bg-light">
-            <h5 class="card-title">Return home to create an account or login</h5>
-            <a href="{{ route('loginOrRegister') }}" class="btn btn-outline-primary">Home</a>
+        <div class="alert alert-warning" role="alert">
+            You are not logged in.
         </div>
-    </div>
+        <div class="card">
+
+            <div class="card-body bg-light">
+                <h5 class="card-title">Return home to create an account or login</h5>
+                <a href="{{ route('loginOrRegister') }}" class="btn btn-outline-primary">Home</a>
+            </div>
+        </div>
 
     @endif
 @endsection

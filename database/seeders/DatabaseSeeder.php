@@ -29,11 +29,11 @@ class DatabaseSeeder extends Seeder
         $this->call(RoleSeeder::class);
         $this->call(PictureSeeder::class);
 
-        foreach (range(1, 200) as $_) {
+        foreach (range(1, 150) as $_) {
             try {
                 DB::table('category_post')->insert([
-                    'category_id' => rand(1, count(Category::all()) - 1),
-                    'post_id' => rand(1, count(Post::all()) - 1),
+                    'category_id' => rand(1, count(Category::all())),
+                    'post_id' => rand(1, count(Post::all())),
                 ]);
             } catch (\Illuminate\Database\QueryException $ex) {
                 //

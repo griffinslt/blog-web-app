@@ -97,6 +97,14 @@ class Commenter extends Component
                 $message->to($this->userEmail);
             });
         }
+        $comment = Comment::findOrFail($this->cid);
+        if (auth()->user()->email != $comment->user->email) {
+            Mail::raw(auth()->user()->name . " (".
+            $this->getUserRoles().
+            ") updated your comment from  '".$this->oldComment."' to '".$this->newComment."' on a post titled '". $this->post->title."'" , function (Message $message) {
+                $message->to($this->userEmail);
+            });
+        }
     }
 
     private function emailDelete()

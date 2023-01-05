@@ -21,8 +21,23 @@
             $pp->file_path = url('images/blank-profile-picture.png');
             $pp->save();
 
+            $role_assigned = DB::table('role_user')->get()->contains('user_id', auth()->user()->id)
+
         @endphp
 
+
+
+@if ( !$role_assigned)
+    @php
+        DB::table('role_user')->insert([
+                    'user_id' => auth()->user()->id,
+                    'role_id' => App\Models\Role::where('role_name', '=', 'normal')->first()->id,
+                ]);
+    @endphp
+
+@endif
+
+ 
     @endif
     
     <div class="py-12">

@@ -8,7 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use App\Http\JokeGenerator;
+use App\Http\JokeGeneratorService;
 use App\Models\Category;
 
 class PostController extends Controller
@@ -123,11 +123,11 @@ class PostController extends Controller
         }
     }
 
-    public function storeJoke(JokeGenerator $j)
+    public function storeJoke(JokeGeneratorService $j)
     {
-        $joke = json_decode(file_get_contents($j->apiUrl));
-        $setup = $joke->setup;
-        $punchline = $joke->punchline;
+
+        $setup = $j->getSetup();
+        $punchline = $j->getPunchline();
 
         $p = new Post();
         $p->title = $setup;
@@ -141,7 +141,6 @@ class PostController extends Controller
         session()->flash('message', 'Post Created');
         return redirect()->route('add-category', ['post' => $pid, 'category' => $category]);
 
-        // return redirect()->route('posts.post', ['post' => $pid]);
     }
 
     /**
@@ -172,27 +171,4 @@ class PostController extends Controller
         }
     }
 
-    // public function commentStore(Request $request)
-    // {
-    //     $validatedData = $request->validate([
-    //         'body' => 'required',
-    //         'post_id' => 'required',
-    //     ]);
-
-    //     $c = new Comment();
-    //     $c->body = $validatedData['body'];
-    //     $c->user_id = Auth::user()->id;
-    //     $c->post_id = $validatedData['post_id'];
-    //     $c->save();
-
-    //     session()->flash('message', 'Comment Created');
-    //     return redirect()->back();
-    // }
-
-    // public function commentDestroy($id)
-    // {
-    //     $comment = Comment::findOrFail($id);
-    //     $comment->delete();
-    //     return redirect()->back();
-    // }
 }

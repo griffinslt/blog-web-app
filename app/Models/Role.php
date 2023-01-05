@@ -9,15 +9,9 @@ class Role extends Model
 {
     use HasFactory;
 
-    // protected $primaryKey = 'role';
-    // public $incrementing = false;
-
-
     public function users()
     {
         return $this->belongsToMany(User::class);
     }
-
-
-
 }
+
