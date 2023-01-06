@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Mail\Message;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
+use App\Http\JokeGeneratorService;
 
 class Commenter extends Component
 {
@@ -56,6 +57,21 @@ class Commenter extends Component
             $this->refresh();
             $this->newComment = '';
         }
+    }
+
+    public function commentJoke(JokeGeneratorService $j)
+    {
+        $joke = $j->getSetup() . ' ... ' . $j->getPunchline();
+        $c = [
+            'body' => $joke,
+            'post_id' => $this->post->id,
+            'user_id' => auth()->user()->id,
+        ];
+
+        Comment::create($c);
+
+        $this->emailNew();
+        $this->refresh();
     }
 
     private function getUserRoles()
